@@ -233,7 +233,7 @@ While building FlexRIC, you may encounter the following error:
 
 ![FlexRIC build error screenshot](fig/10.png)
 
-```bash
+
 CMake Error at examples/xApp/c/monitor/RRC_MESSAGES/CMakeLists.txt:40 (add_library):
   No SOURCES given to target: asn1_nr_rrc_hdrs
 
