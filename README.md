@@ -227,6 +227,64 @@ git checkout oie-ric-taap-xapps
 ```
 mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
 ```
+Troubleshooting Note 1: CMake error `add_library called with no SOURCES given to target`
+
+While building FlexRIC, you may encounter the following error:
+
+![FlexRIC build error screenshot](fig/10.png)
+
+```bash
+CMake Error at examples/xApp/c/monitor/RRC_MESSAGES/CMakeLists.txt:40 (add_library):
+  No SOURCES given to target: asn1_nr_rrc_hdrs
+
+Two fix here can work: 
+1. Updare the cmake version to the latest version 4.3 instead of 3.8. 
+2. Modify the code on line 40 of the file (examples/xApp/c/monitor/RRC_MESSAGES/CMakeLists.txt)
+
+From this:
+```
+  add_library(asn1_nr_rrc_hdrs INTERFACE ${nr_rrc_headers})
+```
+To this: 
+```
+add_library(asn1_nr_rrc_hdrs INTERFACE)
+```
+After making the change, rebuild from a clean directory:
+```
+rm -rf build
+mkdir build && cd build
+cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00
+make -j8
+```
+
+Then the build will stops when compiling the ASN:
+![FlexRIC build error screenshot](fig/11.png)
+
+Here you can solve also two ways:
+1.Asn1 version change 
+
+
+2. Here are the exact steps and commands I used:
+
+a. Navigate to the following path :
+```
+cd flexric/examples/xApp/c
+```
+b. Open the CMake file (File: CMakeLists.txt) and comment out line 3:
+
+![FlexRIC build error screenshot](fig/12.png)
+
+c. Remove the old build directory:
+```
+cd ../../../..   # go back to flexric directory
+rm -rf build
+```
+
+d. Recreate the build directory and rebuild FlexRIC:
+```
+mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
+```
+
 Finally, to install the Service Models (SM) on your machine, use:
 ```
 sudo make install
@@ -323,6 +381,18 @@ nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of mach
 docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
 pip3 install influxdb
 ```
+
+Here, comes the part: 
+After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here. 
+1. Change the IP according to you machine IP here 'NS3_HOST'
+2. Some times machine IP doesn't work as it's installed in docker so you may use you docker gateway IP to run this 
+3. modify the Docker compose file and exclude the port and use this IP to run GUI 127.0.0.0.1 this works for my setup. 
+
+After initiayzing the IP you may see that you simulator is running but waiting for the data to pass here is the issue of calling the pusher function ealier. to solve this: 
+you need to open another terminal 
+run the pusher.py seperately then you will see in GUI things are populatng.
+
+
 
 
 ### 6.4 Usage/deployment 
