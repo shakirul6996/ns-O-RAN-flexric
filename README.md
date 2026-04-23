@@ -396,9 +396,9 @@ nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of mach
 docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
 pip3 install influxdb
 ```
-
+<br\><br\><br\><br\>
 Here, comes the part: 
-After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here. 
+After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here. <br\>
 ![FlexRIC build error screenshot](fig/13.png)
 
  
@@ -407,22 +407,26 @@ After installing everything you GUI will not run or connect with ns-3. So there 
 ```
 docker compose down
 ```
-and then try step 2.
-3. Some times machine IP doesn't work as it's installed in docker so you may use your docker gateway IP to run this. (Example IP: 172.17.0.1 or  172.20.0.1  find out for you case ) After changing 'NS3_HOST' IP with gateway IP then again start docker with:
+and then try step 2. <br\>
+
+2. Some times machine IP doesn't work as it's installed in docker so you may use your docker gateway IP to run this. (Example IP: 172.17.0.1 or  172.20.0.1  find out for you case ) After changing 'NS3_HOST' IP with gateway IP then again start docker with:
 ```
     docker compose up --build -d
 ```
-   if it doesn't work then try step 3 but before trying step 2 first make docker compose down and then try step 3.
-5. modify the Docker compose file and exclude the port like this :
+   if it doesn't work then try step 3 but before trying step 2 first make docker compose down and then try step 3.<br\>
+3. modify the Docker compose file and exclude the port like this : <br\>
 
 image 
 
-and save the file and start docker again: 
+and save the file and start docker again: <br\>
+
 ```
     docker compose up --build -d
 ```
-this works for my setup. You will see scenario list appear in the GUI. 
 
+
+this works for my setup. You will see scenario list appear in the GUI. 
+<br\><br\><br\>
 
 
 
