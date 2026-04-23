@@ -262,9 +262,9 @@ Then the build will stops when compiling the ASN:
 
 Here you can solve also two ways:
 
-1.Asn1 version change according to aper or uper. 
+1. Asn1 version change according to aper or uper. 
 
-2. Here are the exact steps and commands I used:
+2. Here are second way with the exact steps and commands I used by excluding the installation of some part:
 
 a. Navigate to the following path :
 ```
