@@ -457,12 +457,14 @@ sim_data_pusher.py
 
 ```
 <br />
-![FlexRIC build error screenshot](fig/15.png)<br />
+![FlexRIC build error screenshot](fig/15.png)
+<br /><br />
+![FlexRIC build error screenshot](fig/16.png)
 
-![FlexRIC build error screenshot](fig/16.png)<br />
+<br /><br />
 ![FlexRIC build error screenshot](fig/17.png)
 
-<br />
+<br /><br />
 6. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
