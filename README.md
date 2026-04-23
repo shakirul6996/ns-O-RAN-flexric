@@ -479,22 +479,16 @@ location: cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/GUI/
    <br />
 
    
-    and save the file and start docker again:
+  and save the file and start docker again:
     
-    <br />
-
-
-
-    
-    ```
-        docker compose up --build -d
-    ```
+   
+  ```
+  docker compose up --build -d
+  ```
     
     
-    this worked for my setup. You will see scenario list appear in the GUI.
-    <br /><br /><br />
-
-
+  this worked for my setup. You will see scenario list appear in the GUI.
+  <br /><br /><br />
 
 3. Connect to FlexRIC by run Flexric in the bachground and mark on webpage 'Connect to FlexRIC'
 4. Click on webpage 'Show form',choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
