@@ -475,9 +475,16 @@ location: cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/GUI/
         grafana_data:
          
    ```       
+   <br />
+   <br />
 
- 
-    and save the file and start docker again: <br />
+   
+    and save the file and start docker again:
+    
+    <br />
+
+
+
     
     ```
         docker compose up --build -d
