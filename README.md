@@ -261,6 +261,7 @@ Then the build will stops when compiling the ASN:
 ![FlexRIC build error screenshot](fig/11.png)
 
 Here you can solve also two ways:
+
 1.Asn1 version change 
 
 
