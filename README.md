@@ -430,50 +430,51 @@ pip3 install influxdb
 file name: docker-compose.yml
 location: cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/GUI/
 
-    ``` 
-   services:
-
-  gui:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    network_mode: host
-    depends_on:
-      - influxdb
-    environment:
-      - INFLUXDB_DATABASE=influx
-      - INFLUXDB_HOST=127.0.0.1
-      - INFLUXDB_PASSWORD=admin
-      - INFLUXDB_PORT=8086
-      - INFLUXDB_USERNAME=admin
-      - NS3_HOST=127.0.0.1
-
-  influxdb:
-    image: influxdb:1.8-alpine
-    env_file: configuration.env
-    ports:
-      - "127.0.0.1:8086:8086"
-    command: sh -c "influxd & sleep 10 && influx -database influx -execute 'delete from /\\w*/'; tail -f /dev/null"
-    volumes:
-      - ./:/imports
-      - influxdb_data:/var/lib/influxdb
-
-  grafana:
-    image: grafana/grafana:8.0.2
-    depends_on:
-      - influxdb
-    env_file: configuration.env
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
-
-volumes:
-  influxdb_data:
-  grafana_data:
-   ```
+   ```     
+         services:
+      
+        gui:
+          build:
+            context: .
+            dockerfile: Dockerfile
+          network_mode: host
+          depends_on:
+            - influxdb
+          environment:
+            - INFLUXDB_DATABASE=influx
+            - INFLUXDB_HOST=127.0.0.1
+            - INFLUXDB_PASSWORD=admin
+            - INFLUXDB_PORT=8086
+            - INFLUXDB_USERNAME=admin
+            - NS3_HOST=127.0.0.1
+      
+        influxdb:
+          image: influxdb:1.8-alpine
+          env_file: configuration.env
+          ports:
+            - "127.0.0.1:8086:8086"
+          command: sh -c "influxd & sleep 10 && influx -database influx -execute 'delete from /\\w*/'; tail -f /dev/null"
+          volumes:
+            - ./:/imports
+            - influxdb_data:/var/lib/influxdb
+      
+        grafana:
+          image: grafana/grafana:8.0.2
+          depends_on:
+            - influxdb
+          env_file: configuration.env
+          ports:
+            - "3000:3000"
+          volumes:
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
+            - ./grafana/dashboards/:/var/lib/grafana/dashboards/
+      
+      volumes:
+        influxdb_data:
+        grafana_data:
+         
+   ```       
 
  
     and save the file and start docker again: <br />
