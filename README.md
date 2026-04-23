@@ -397,8 +397,8 @@ docker-compose up --build -d # this will deploy environement which includes GUI 
 pip3 install influxdb
 ```
 <br /><br /><br /><br />
-Here, comes the part: 
-After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here.<br />
+Here, comes the part: <br /> 
+After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here.(if your GUI is running with machine IP mentioned above then you can skip this part)<br />
 ![FlexRIC build error screenshot](fig/13.png)
 
  
