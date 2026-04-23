@@ -391,44 +391,12 @@ echo \
 sudo apt update
 sudo apt install docker-compose-plugin -y
 
-cd GUI
+cd GUI ( full path should look like this cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/GUI/ ) 
 nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of machine where ns3 is deployed '- NS3_HOST=192.168.100.21'. This information is needed for control of ns3 from GUI.
 docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
 pip3 install influxdb
 ```
 <br /><br /><br /><br />
-Here, comes the part: <br /> 
-After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here.(if your GUI is running with machine IP mentioned above then you can skip this part)<br />
-![FlexRIC build error screenshot](fig/13.png)
-
- 
-1. Change the IP according to you machine IP here 'NS3_HOST'. ( Example IP: 192.168.100.21 ) it was the first try as mentioned above 
-  if it doesn't work you can't see the scenario in the scenario list then try step 2 but before trying step 2 first make
-```
-docker compose down
-```
-and then try step 2. <br />
-
-2. Some times machine IP doesn't work as it's installed in docker so you may use your docker gateway IP to run this. (Example IP: 172.17.0.1 or  172.20.0.1  find out for you case ) After changing 'NS3_HOST' IP with gateway IP then again start docker with:
-```
-    docker compose up --build -d
-```
-   if it doesn't work then try step 3 but before trying step 2 first make docker compose down and then try step 3.<br\>
-3. modify the Docker compose file and exclude the port like this : <br />
-
-image 
-
-and save the file and start docker again:<br />
-
-```
-    docker compose up --build -d
-```
-
-
-this works for my setup. You will see scenario list appear in the GUI. 
-<br /><br /><br />
-
-
 
 
 
@@ -438,7 +406,41 @@ this works for my setup. You will see scenario list appear in the GUI.
 #### 6.4.1 Run RIC-TaaP Studio
 1. First you need to run script 'python3 gui_trigger.py' in 'mmwave-LENA-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
- It take up to 5 minutes to deploy portal, depends on HW.
+ It take up to 5 minutes to deploy portal, depends on HW.  <br />
+
+    Troubleshoot here:  <br /> 
+    After starting your GUI with 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000) you will not see scenario list to run. So here are possible fixs you can try for your situation ( If your scenario list is visiable   at GUI you can skip this and go to step 3).<br />
+    ![FlexRIC build error screenshot](fig/13.png)
+    
+     
+    a. Change the IP according to you machine IP here 'NS3_HOST'. ( e.g 192.168.100.21 ) it was the first try as mentioned above 
+      if it doesn't work you can't see the scenario list then try step b but before trying step b first make
+    ```
+    docker compose down
+    ```
+    and then try step 2. <br /> <br />
+    
+    b. Some times machine IP doesn't work as it's installed in docker so you may use your docker gateway IP to run this. (e.g 172.17.0.1 or 172.20.0.1  find out for you case  cmd: ipconfig  ) After changing 'NS3_HOST' IP with gateway IP then again start docker with:
+    ```
+        docker compose up --build -d
+    ```
+       if it doesn't work then try step c but before trying step c first make docker compose down and then try step c. <br /> <br />
+    c. Modify the Docker compose file and exclude the port like this : <br />  <br /> 
+    
+    image 
+    
+    and save the file and start docker again: <br />
+    
+    ```
+        docker compose up --build -d
+    ```
+    
+    
+    this worked for my setup. You will see scenario list appear in the GUI.
+    <br /><br /><br />
+
+
+
 3. Connect to FlexRIC by run Flexric in the bachground and mark on webpage 'Connect to FlexRIC'
 4. Click on webpage 'Show form',choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
  Select the scenario for the scenarion list and click on the sceario flags to run the scenario configuration, if disable scenario flags, the system will you your custom configuration  <br />
@@ -465,12 +467,12 @@ sim_data_pusher.py
 ![FlexRIC build error screenshot](fig/17.png)
 
 <br /><br />
-6. To see current KPIs, click 'Source Data'. 
+5. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-7. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
-8. To stop simulation, click 'Stop' on 'Show Form' window.
-9. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+7. To stop simulation, click 'Stop' on 'Show Form' window.
+8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
  ![ns-O-RAN](fig/6.png)
 
