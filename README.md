@@ -375,7 +375,22 @@ At this step the software in place to configure and build ns-3:
 ```
 ### 6.3 GUI deployment
 
+First you need install docker compose to run GUI:
+
+
 ```
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  focal stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-compose-plugin -y
+
 cd GUI
 nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of machine where ns3 is deployed '- NS3_HOST=192.168.100.21'. This information is needed for control of ns3 from GUI.
 docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
@@ -384,13 +399,32 @@ pip3 install influxdb
 
 Here, comes the part: 
 After installing everything you GUI will not run or connect with ns-3. So there are possible fix you can try for you situation different solution can help you here. 
-1. Change the IP according to you machine IP here 'NS3_HOST'
-2. Some times machine IP doesn't work as it's installed in docker so you may use you docker gateway IP to run this 
-3. modify the Docker compose file and exclude the port and use this IP to run GUI 127.0.0.0.1 this works for my setup. 
+![FlexRIC build error screenshot](fig/13.png)
 
-After initiayzing the IP you may see that you simulator is running but waiting for the data to pass here is the issue of calling the pusher function ealier. to solve this: 
-you need to open another terminal 
-run the pusher.py seperately then you will see in GUI things are populatng.
+ 
+1. Change the IP according to you machine IP here 'NS3_HOST'. ( Example IP: 192.168.100.21 ) it was the first try as mentioned above 
+  if it doesn't work you can't see the scenario in the scenario list then try step 2 but before trying step 2 first make
+```
+docker compose down
+```
+and then try step 2.
+3. Some times machine IP doesn't work as it's installed in docker so you may use your docker gateway IP to run this. (Example IP: 172.17.0.1 or  172.20.0.1  find out for you case ) After changing 'NS3_HOST' IP with gateway IP then again start docker with:
+```
+    docker compose up --build -d
+```
+   if it doesn't work then try step 3 but before trying step 2 first make docker compose down and then try step 3.
+5. modify the Docker compose file and exclude the port like this :
+
+image 
+
+and save the file and start docker again: 
+```
+    docker compose up --build -d
+```
+this works for my setup. You will see scenario list appear in the GUI. 
+
+
+
 
 
 
@@ -406,12 +440,32 @@ run the pusher.py seperately then you will see in GUI things are populatng.
 4. Click on webpage 'Show form',choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
  Select the scenario for the scenarion list and click on the sceario flags to run the scenario configuration, if disable scenario flags, the system will you your custom configuration  <br />
  Runtime logs from ns-3 will be saved in 'mmwave-LENA-oran/ns3_run.log' file.
-5. To see current KPIs, click 'Source Data'. 
+
+Troubleshoot here: 
+After clicking the start you may see that you simulator is running but waiting for the data to pass, here is the issue of calling the pusher function ealier. to solve this:
+
+![FlexRIC build error screenshot](fig/14.png)
+
+You need to open another terminal run the pusher.py seperately then you will see in GUI things are populatng:
+
+```
+cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/
+sim_data_pusher.py
+
+```
+
+![FlexRIC build error screenshot](fig/15.png)
+
+![FlexRIC build error screenshot](fig/16.png)
+![FlexRIC build error screenshot](fig/17.png)
+
+
+6. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
-7. To stop simulation, click 'Stop' on 'Show Form' window.
-8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+7. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+8. To stop simulation, click 'Stop' on 'Show Form' window.
+9. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
  ![ns-O-RAN](fig/6.png)
 
