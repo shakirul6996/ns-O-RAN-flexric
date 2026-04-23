@@ -263,26 +263,27 @@ Then the build will stops when compiling the ASN:
 Here you can solve also two ways:
 
 1.Asn1 version change according to aper or uper. 
+
 2. Here are the exact steps and commands I used:
 
-    a. Navigate to the following path :
-    ```
-    cd flexric/examples/xApp/c
-    ```
-    b. Open the CMake file (File: CMakeLists.txt) and comment out line 3:
+a. Navigate to the following path :
+```
+cd flexric/examples/xApp/c
+```
+b. Open the CMake file (File: CMakeLists.txt) and comment out line 3:
 
-    ![FlexRIC build error screenshot](fig/12.png)
+![FlexRIC build error screenshot](fig/12.png)
 
-    c. Remove the old build directory:
-    ```
-    cd ../../../..   # go back to flexric directory
-    rm -rf build
-    ```
+c. Remove the old build directory:
+```
+cd ../../../..   # go back to flexric directory
+rm -rf build
+```
 
-    d. Recreate the build directory and rebuild FlexRIC:
-    ```
-    mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
-    ```
+d. Recreate the build directory and rebuild FlexRIC:
+```
+mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
+```
 
 Finally, to install the Service Models (SM) on your machine, use:
 ```
