@@ -456,12 +456,12 @@ cd ~/ns-O-RAN-flexric/mmwave-LENA-oran/
 sim_data_pusher.py
 
 ```
-<br />
+
 ![FlexRIC build error screenshot](fig/15.png)
-<br /><br />
+
 ![FlexRIC build error screenshot](fig/16.png)
 
-<br /><br />
+
 ![FlexRIC build error screenshot](fig/17.png)
 
 <br /><br />
